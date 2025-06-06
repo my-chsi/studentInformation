@@ -36,8 +36,21 @@
       </div>
 
     </div>
+
     <template v-if="resultJson.status==0">
       <div class="padding16 xj-index chsi-font">
+        <!-- 图像采集码 -->
+        <div class="jd-res-div" :style="{marginBottom:(!resultJson.result.showZpCollated)?'0.533rem':'0.267rem'}">
+          <div class="flex-box" @click="showTxcjm">
+            <div class="flex1">
+              <span class="scan-txewm"></span>查看图像采集码
+            </div>
+            <div class="arrow-right"><i class="iconfont ">&#xe601;</i></div>
+          </div>
+          <div v-if="!resultJson.result.showZpCollated " class="sanjiao">
+            <em></em><span></span>
+          </div>
+        </div>
         <div class='top-card'>
           <van-row>
             <van-col span="9">
