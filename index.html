@@ -11,10 +11,9 @@
   <link rel="icon" href='https://t1.chei.com.cn/archive/favicon.ico' type="image/x-icon">
   <link rel="stylesheet" href='https://t1.chei.com.cn/archive/fonts/chsi-font.css' />
   <link rel="stylesheet" href="./css/extra-wrap.css">
-
   <!-- 替代下边一行防止那天参数失效 -->
-  <link rel="stylesheet" href="./css/app.css">
-  <!-- <link rel="stylesheet" href='https://t4.chei.com.cn/archive/mobile/css/app.css?v=20250428' /> -->
+  <!-- <link rel="stylesheet" href="./css/app.css"> -->
+  <link rel="stylesheet" href='https://t4.chei.com.cn/archive/mobile/css/app.css?v=20250428' />
   <link rel="stylesheet" href='https://t1.chei.com.cn/common/ch/iconfont.css' />
   <link rel="stylesheet" href='https://t1.chei.com.cn/common/css/font/RareWords/RareWordsFonts.css' />
   <script src='https://t1.chei.com.cn/common/js/vue/2.5.6/vue.min.js'></script>
@@ -23,36 +22,17 @@
   <script src='https://t2.chei.com.cn/archive/mobile/js/app-1.0.3.js'></script>
   <script src='https://t3.chei.com.cn/archive/mobile/js/lodash.min.js'></script>
   <script src='https://t4.chei.com.cn/archive/mobile/js/jweixin-1.6.0.js'></script>
-
-
 </head>
 
 <body>
   <div id="app" class="my-container" v-cloak>
-    <script>
-      (function (w, d, s, q) {
-        w[q] = w[q] || [];
-        var f = d.getElementsByTagName(s)[0], j = d.createElement(s);
-        j.async = true;
-        j.id = 'beacon-aplus';
-        j.src = 'https://o.alicdn.com/QTSDK/quicktracking-sdk/qt_web.umd.js';
-        f.parentNode.insertBefore(j, f);
-      })(window, document, 'script', 'aplus_queue');
-      aplus_queue.push({ action: 'aplus.setMetaInfo', arguments: ['appKey', 'sc5wvrha9o0bde9ugpoqm37u'] })
-      aplus_queue.push({ action: 'aplus.setMetaInfo', arguments: ['trackDomain', 'qtedu.om.moe.edu.cn'] });
-    </script>
-    <img src='https://t1.chei.com.cn/common/wap/images/share_xxda.jpg' width='0' height='0'
-      style='position: absolute;top:-100px;left: 0' />
-    <van-nav-bar class="white-header" :title="whiteTit" border=false left-text="" left-arrow @click-left="onClickLeft">
+    <van-nav-bar class="white-header" :title="whiteTit" border=false left-text="" left-arrow>
     </van-nav-bar>
     <div class="vote-part">
 
       <!--移动端-->
       <div id="vote_wap">
         <a href="./img/adv.png" style="display:block" class="vote-jy-part vote_bg_zytj"></a>
-        <!-- <div>
-          2123123
-         </div> -->
       </div>
 
     </div>
@@ -161,53 +141,7 @@
         data: function () {
           return {
             whiteTit: '高等学籍',
-            flagFalse: false,
             resultJson: { "result": { "csrq": "\udbd3\udf38\udbe5\udc18\udbe5\udc18\udbe5\udc18\udbcc\udddb\udbe5\udc18\udbd8\udc09\udbe2\udff1\udbd8\udecc\udbe4\udecf\udbd3\ude55", "hasXlPic": true, "xz": "\udbe3\udce8\u0020\udbcc\udddb", "xxxs": "\udbce\udd2d\udbda\udea5\udbe7\udc79\udbd3\ude55\udbe2\uddc2", "bh": "\udbe5\udeb2\udbd2\udf0f\udbd8\udecc\udbdf\udcda\udbe5\udc18\udbd8\udecc", "zpCollateVo": null, "xsh": "", "yxmc": "\udbcd\udfd2\udbce\udeb9\udbda\udd44\udbd3\ude4b\udbe4\ude70\udbe2\udea7", "showZpCollated": false, "showTxcjm": false, "xllb": "\udbce\udd2d\udbda\udea5\udbcc\uded7\udbd7\udfd6\udbe6\udc05\udbdc\udd40", "fy": "\udbde\udfb2\udbe0\udf04\udbdf\ude52\udbcd\udf7b\udbe2\udea7\udbd6\udced\udbdd\udc0e\udbcd\uddea\udbe2\udea7\udbd7\udc18", "xjzt": "\udbce\udcef\udbd1\udd4a\udbe7\udf43\uFF08\udbe0\udd7b\udbe6\udf56\uFF09", "id": "mlkblbk9f2d2lebs", "hasLqPic": true, "showZppj": false, "cc": "\udbd2\udfde\udbcd\udf7b", "xlzms": false, "mzItemName": "民族", "xb": "\udbdb\udf3e", "zymc": "\udbe5\udeb2\udbd2\udf0f\udbd3\ude4b\udbd6\udd82", "mz": "\udbd3\udcfd\udbd0\udea9", "rxrq": "\udbd3\udf38\udbe5\udc18\udbd8\udecc\udbdf\udcda\udbcc\udddb\udbe5\udc18\udbd5\udf30\udbe2\udff1\udbe5\udc18\udbd8\udecc\udbd3\ude55", "xh": "\udbd8\udc09\udbd8\udecc\udbd8\udecc\udbdf\udcda\udbe5\udc18\udbd3\udf38\udbe5\udc18\udbd8\udecc\udbe5\udc18\udbd8\udecc\udbd3\udf38\udbd5\udf30", "sfzh": "\udbe3\udce8\udbd8\udecc\udbe5\udc18\udbd3\udf38\udbd3\udf38\udbd8\udc09\udbd3\udf38\udbe5\udc18\udbe5\udc18\udbe5\udc18\udbe5\udc18\udbd8\udc09\udbd8\udecc\udbe4\udecf\udbe3\udce8\udbe5\udc18\udbd8\udecc\udbd3\udf38", "xm": "\udbd4\udf1a\udbdf\udd78\udbd3\udce4", "byrq": "\udbd3\udf38\udbe5\udc18\udbd3\udf38\udbd3\udf38\udbcc\udddb\udbe5\udc18\udbe0\ude27\udbe2\udff1\udbe5\udc18\udbd8\udecc\udbd3\ude55", "byrqItemName": "离校日期" }, "message": "", "status": 0 },
-            picZzk: { //图像找找看相关
-              zzkFlag: 1,//找找看图片显示控制变量，1表示初始化页面，还未请求回来，2表示请求找找看接口回来有找找看功能，3表示请求回来无找找看功能
-              tcFlag: false,//是否显示找找看弹层
-              jlFlag: 1,//找找看结论，1不显示结论，2显示正确结论，3选择未找见结论
-              xjInfo: {
-                yxmc: '', //院校
-                zymc: '', //专业
-                cc: '', //层次
-                rxrq: ''//出生年月
-              },
-              ImgsW: 90,//图片容器的宽度
-              pvInfoVoList: [], //返回与用户未关联的照片  
-              selected: '',//存放用户选择的照片id
-              selectedImgCode: '',//存放用户选择的照片code，回显图片使用
-              tcStatus: 1,//弹层内容状态，1表示出选择 照片，2表示选择确定有的提示内容，3表示未找见照片的提示内容4是loading效果
-              tcTitle: '查找学历照片',//弹层标题,
-              selectedImgTime: '', //回显提交图片的时间
-              isShowTime: false//是否显示提交图片的时间，查看的时候显示，查找的第二步不显示
-            },
-            picJd: { //图像校对相关
-              tcFlag: false,
-              txjdFlag: true,//是显示图像校对，还是显示评价
-              xjInfo: {
-                yxmc: '', //院校
-                zymc: '', //专业
-                cc: '', //层次
-                rxrq: ''//出生年月
-              },
-              zpRight: '', //照片是否正确，可能得值1:正确,2：错误
-              errorReason: '',//错误原因
-              pj: {
-                psfwpj: '', //服务质量评价
-                zpzlpj: '', //照片质量评价
-                pzsj: '',//拍照时间
-              },
-              zytjFlag: false//是否显示专业推荐
-            },
-            txewm: {//图像二维码
-              tcFlag: false,
-              type: 1,
-              archiveId: ''
-            },
-            jdBtnLoading: false,
-            myVote: null,//离校问卷相关
-            timeOutEvent: null
           }
         },
         methods: {
@@ -235,67 +169,6 @@
         }
       },
       mixins: typeof mixin != 'undefined' ? [mixin] : {},
-      created: function () {
-      },
-      methods: {
-        onClickLeft: function () { //左上的返回按钮
-          history.back(-1);
-        },
-        goToIndex: function () {
-          window.location.href = 'https://my.chsi.com.cn/archive/wap/index.action';
-        },
-        getQueryString: function (name) {//获取地址栏参数
-          var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-          var r = window.location.search.substr(1).match(reg);
-          if (r != null) {
-            return unescape(r[2]);
-          }
-          return null;
-        },
-        VoteGoToIndex: function () {//投票完成返回首页
-          var _from = this.getQueryString('from');
-          if (_from == 'archive-dctp-wap') {
-            window.location.href = 'https://my.chsi.com.cn/archive/survey/index.action';
-          } else {
-            window.location.href = 'https://my.chsi.com.cn/archive/wap/index.action';
-          }
-        },
-        addCookie: function (name, value) { //设置cookie
-          var cookieString = name + "=" + escape(value);
-          document.cookie = cookieString;
-          document.cookie.setSecure = true;//只允许在https环境下使用cookie
-        },
-        getCookie: function (name) {
-          var strCookie = document.cookie;
-          var arrCookie = strCookie.split("; ");
-          for (var i = 0; i < arrCookie.length; i++) {
-            var arr = arrCookie[i].split("=");
-            if (arr[0] == name) return arr[1];
-          }
-          return "";
-        },
-        trimSpace: function (s) {//去掉左右空格
-          return s.replace(/(^\s*)|(\s*$)/g, "");
-        },
-        showSfhyOrder: function () {
-          //展示身份核验方式的序号，动态组合显示方式一、二、三
-          var nodeList = document.getElementsByClassName('verify-list')[0].getElementsByTagName("li");
-          var liLen = nodeList.length;
-          for (var i = 0; i < liLen; i++) {
-            nodeList[i].getElementsByTagName('div')[0].innerText = '方式 ' + (i + 1);
-          }
-        },
-        noticeFace: function (from) {
-          var _this = this;
-          api.syncAjax('post', 'https://my.chsi.com.cn/archive/gdjy/check/face/notice.action', { data: { from: from } }).then(function (res) {
-            if (res.status == 0) {
-              window.location.href = res.result;
-            } else {
-              _this.$toast(res.message);
-            }
-          });
-        }
-      }
     });
   </script>
 
