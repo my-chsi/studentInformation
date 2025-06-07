@@ -56,7 +56,7 @@
               <div class="flex-box">
                 <div class="flex1">
                   <div class="img-div" id="imageContainer">
-                    <!-- <img src="./img/picture.jpg" class="full-img" /> -->
+                    <img src="./img/no-photo.png" class="full-img" />
                   </div>
                   <p class="text">录取照片</p>
                 </div>
@@ -237,23 +237,23 @@
 
         await new Promise((resolve) => request.onsuccess = resolve);
         const images = request.result;
+        if (images && images.length > 0) {
+          const container = document.getElementById('imageContainer');
+          container.innerHTML = ''; // 清空原有内容
 
-        const container = document.getElementById('imageContainer');
-        container.innerHTML = ''; // 清空原有内容
+          images.forEach((image) => {
+            // 将 ArrayBuffer 转换为 Blob
+            const blob = new Blob([image.data], { type: image.type });
+            const imgUrl = URL.createObjectURL(blob);
 
-        images.forEach((image) => {
-          // 将 ArrayBuffer 转换为 Blob
-          const blob = new Blob([image.data], { type: image.type });
-          const imgUrl = URL.createObjectURL(blob);
-
-          const img = document.createElement('img');
-          img.src = imgUrl;
-          img.classList.add("full-img")
-          container.appendChild(img);
-        });
+            const img = document.createElement('img');
+            img.src = imgUrl;
+            img.classList.add("full-img")
+            container.appendChild(img);
+          });
+        }
       } catch (error) {
         console.error(error);
-        alert('读取失败');
       }
     }
     //解决手机浏览器自带返回 没刷新问题
