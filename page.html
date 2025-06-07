@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta content="yes" name="apple-mobile-web-app-capable">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no,viewport-fit=cover">
+  <meta name="format-detection" content="telephone=no" />
+  <title>学信档案</title>
+  <link rel="icon" href='https://t1.chei.com.cn/archive/favicon.ico' type="image/x-icon">
+  <link rel="stylesheet" href='https://t1.chei.com.cn/archive/fonts/chsi-font.css' />
+  <link rel="stylesheet" href="./css/extra-wrap.css">
+  <!-- 替代下边一行防止那天参数失效 -->
+  <!-- <link rel="stylesheet" href="./css/app.css"> -->
+  <link rel="stylesheet" href='https://t4.chei.com.cn/archive/mobile/css/app.css?v=20250428' />
+  <link rel="stylesheet" href='https://t1.chei.com.cn/common/ch/iconfont.css' />
+  <link rel="stylesheet" href='https://t1.chei.com.cn/common/css/font/RareWords/RareWordsFonts.css' />
+  <script src='https://t1.chei.com.cn/common/js/vue/2.5.6/vue.min.js'></script>
+  <script src='https://t1.chei.com.cn/archive/mobile/js/vant1.47/vant.min.js'></script>
+  <script src='https://t1.chei.com.cn/archive/mobile/js/vendors-1.0.0.js'></script>
+  <script src='https://t2.chei.com.cn/archive/mobile/js/app-1.0.3.js'></script>
+  <script src='https://t3.chei.com.cn/archive/mobile/js/lodash.min.js'></script>
+  <script src='https://t4.chei.com.cn/archive/mobile/js/jweixin-1.6.0.js'></script>
+</head>
+
+<body>
+  <div id="app" class="my-container" v-cloak>
+    <van-nav-bar class="white-header" :title="whiteTit" border=false left-text="" left-arrow>
+    </van-nav-bar>
+    <div class="vote-part">
+      <!--移动端-->
+      <div id="vote_wap">
+        <a href="./img/adv.png" onclick="return false" style="display:block" class="vote-jy-part vote_bg_zytj"></a>
+      </div>
+
+    </div>
+
+    <template v-if="resultJson.status==0">
+      <div class="padding16 xj-index chsi-font">
+        <!-- 图像采集码 -->
+        <div class="jd-res-div" :style="{marginBottom:(!resultJson.result.showZpCollated)?'0.533rem':'0.267rem'}">
+          <div class="flex-box" @click="showTxcjm">
+            <div class="flex1">
+              <span class="scan-txewm"></span>查看图像采集码
+            </div>
+            <div class="arrow-right"><i class="iconfont ">&#xe601;</i></div>
+          </div>
+          <div v-if="!resultJson.result.showZpCollated " class="sanjiao">
+            <em></em><span></span>
+          </div>
+        </div>
+        <div class='top-card'>
+          <van-row>
+            <van-col span="9">
+              <div class="flex-box">
+                <div class="flex1">
+                  <div class="img-div" id="imageContainer">
+                    <!-- <img src="./img/picture.jpg" class="full-img" /> -->
+                  </div>
+                  <p class="text">录取照片</p>
+                </div>
+                <div class="flex1">
+                  <div class="img-div">
+                    <img src="./img/no-photo.png" class="full-img" />
+                  </div>
+                  <p class="text">学历照片</p>
+                </div>
+              </div>
+            </van-col>
+            </van-col>
+            <van-col span="15">
+              <h5 class="nameFamily">{{formData.name}}</h5>
+              <p>{{formData.gender}}　{{formData.birthday}}</p>
+            </van-col>
+          </van-row>
+          <div class="top-bottom-img xj-detail-img">
+            <div class="yxmc-wrap">
+              <div class="yxmc">{{formData.school}}</div>
+              <div class="cc xj-cc-lable">{{formData.degree}}</div>
+            </div>
+            <div class="des">{{formData.major}}　|　普通全日制</div>
+          </div>
+        </div>
+        <div class="xj-c">
+          <ul class="gdjy-view-ul">
+            <li>
+              <div class="left">民族</div>
+              <div class="right">{{formData.nationality}}</div>
+            </li>
+            <li>
+              <div class="left">证件号码</div>
+              <div class="right">{{formData.idNumber}}</div>
+            </li>
+            <li>
+              <div class="left">学制</div>
+              <div class="right">{{formData.schoolSystem}} 年</div>
+            </li>
+            <li>
+              <div class="left">学历类别</div>
+              <div class="right">普通高等教育</div>
+            </li>
+            <li>
+              <div class="left">分院</div>
+              <div class="right">{{formData.college}}</div>
+            </li>
+            <li>
+              <div class="left">系所</div>
+              <div class="right">  </div>
+            </li>
+            <li>
+              <div class="left">班级</div>
+              <div class="right">{{formData.class}}</div>
+            </li>
+            <li>
+              <div class="left">学号</div>
+              <div class="right">{{formData.studentId}}</div>
+            </li>
+            <li>
+              <div class="left">入学日期</div>
+              <div class="right">{{formData.enrollmentDate}}</div>
+            </li>
+            <li>
+              <div class="left">学籍状态</div>
+              <div class="right">在籍(注册学籍)</div>
+            </li>
+            <li>
+              <div class="left">预计毕业日期</div>
+              <div class="right">{{formData.graduationDate}}</div>
+            </li>
+
+          </ul>
+        </div>
+        <van-row>
+          <van-col span="24">
+            <van-button onclick="getReport()" class="my-btn" type="primary">申请验证报告</van-button>
+          </van-col>
+        </van-row>
+      </div>
+
+
+    </template>
+    <template v-else>
+      <div class="status-kong">
+        <div class="status-img status-fail"></div>
+        <p class="des">{{resultJson.message}}</p>
+      </div>
+    </template>
+    <script>
+      var mixin = {
+        data: function () {
+          return {
+            whiteTit: '高等学籍',
+            resultJson: { "result": { "csrq": "\udbd3\udf38\udbe5\udc18\udbe5\udc18\udbe5\udc18\udbcc\udddb\udbe5\udc18\udbd8\udc09\udbe2\udff1\udbd8\udecc\udbe4\udecf\udbd3\ude55", "hasXlPic": true, "xz": "\udbe3\udce8\u0020\udbcc\udddb", "xxxs": "\udbce\udd2d\udbda\udea5\udbe7\udc79\udbd3\ude55\udbe2\uddc2", "bh": "\udbe5\udeb2\udbd2\udf0f\udbd8\udecc\udbdf\udcda\udbe5\udc18\udbd8\udecc", "zpCollateVo": null, "xsh": "", "yxmc": "\udbcd\udfd2\udbce\udeb9\udbda\udd44\udbd3\ude4b\udbe4\ude70\udbe2\udea7", "showZpCollated": false, "showTxcjm": false, "xllb": "\udbce\udd2d\udbda\udea5\udbcc\uded7\udbd7\udfd6\udbe6\udc05\udbdc\udd40", "fy": "\udbde\udfb2\udbe0\udf04\udbdf\ude52\udbcd\udf7b\udbe2\udea7\udbd6\udced\udbdd\udc0e\udbcd\uddea\udbe2\udea7\udbd7\udc18", "xjzt": "\udbce\udcef\udbd1\udd4a\udbe7\udf43\uFF08\udbe0\udd7b\udbe6\udf56\uFF09", "id": "mlkblbk9f2d2lebs", "hasLqPic": true, "showZppj": false, "cc": "\udbd2\udfde\udbcd\udf7b", "xlzms": false, "mzItemName": "民族", "xb": "\udbdb\udf3e", "zymc": "\udbe5\udeb2\udbd2\udf0f\udbd3\ude4b\udbd6\udd82", "mz": "\udbd3\udcfd\udbd0\udea9", "rxrq": "\udbd3\udf38\udbe5\udc18\udbd8\udecc\udbdf\udcda\udbcc\udddb\udbe5\udc18\udbd5\udf30\udbe2\udff1\udbe5\udc18\udbd8\udecc\udbd3\ude55", "xh": "\udbd8\udc09\udbd8\udecc\udbd8\udecc\udbdf\udcda\udbe5\udc18\udbd3\udf38\udbe5\udc18\udbd8\udecc\udbe5\udc18\udbd8\udecc\udbd3\udf38\udbd5\udf30", "sfzh": "\udbe3\udce8\udbd8\udecc\udbe5\udc18\udbd3\udf38\udbd3\udf38\udbd8\udc09\udbd3\udf38\udbe5\udc18\udbe5\udc18\udbe5\udc18\udbe5\udc18\udbd8\udc09\udbd8\udecc\udbe4\udecf\udbe3\udce8\udbe5\udc18\udbd8\udecc\udbd3\udf38", "xm": "\udbd4\udf1a\udbdf\udd78\udbd3\udce4", "byrq": "\udbd3\udf38\udbe5\udc18\udbd3\udf38\udbd3\udf38\udbcc\udddb\udbe5\udc18\udbe0\ude27\udbe2\udff1\udbe5\udc18\udbd8\udecc\udbd3\ude55", "byrqItemName": "离校日期" }, "message": "", "status": 0 },
+            formData: {
+              name: '',
+              gender: '',
+              birthday: '',//出生年月日
+              school: '',// 学校
+              degree: '', // 学历
+              major: '', // 专业
+              nationality: '', // 民族
+              idNumber: '',//身份证号
+              schoolSystem: '',//学制
+              college: '',//学院
+              class: '',//班级
+              studentId: '',//学号
+              enrollmentDate: '',//入学日期
+              graduationDate: ''//预计毕业日期
+            }
+          }
+        },
+        methods: {
+          refresh: function () {
+            window.location.reload();
+          },
+          showTxcjm: function () {
+            this.txewm.tcFlag = true;
+            this.txewm.type = 2;
+            this.txewm.archiveId = this.resultJson.result.id;
+          }
+        },
+        created() {
+          let stuInfo = localStorage.getItem("stuInfo")
+          if (stuInfo) {
+            this.formData = JSON.parse(stuInfo)
+          }
+        }
+      }
+    </script>
+
+
+  </div>
+  <script>
+    var myVue = new Vue({
+      el: '#app',
+      data: function () {
+        return {
+          activeBottom: 0,
+          topText: '学信档案' //标题文字
+        }
+      },
+      mixins: typeof mixin != 'undefined' ? [mixin] : {},
+    });
+  </script>
+
+  <script type="text/javascript">
+    // 数据库名称和存储对象名称
+    const DB_NAME = 'ImageDB';
+    const STORE_NAME = 'images';
+    // 打开/创建数据库
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, 1);
+
+        request.onerror = () => reject('数据库打开失败');
+
+        request.onupgradeneeded = (event) => {
+          const db = event.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+          }
+        };
+
+        request.onsuccess = (event) => {
+          db = event.target.result;
+          resolve(db);
+        };
+      });
+    }
+    // 从 IndexedDB 读取并展示图片
+    async function loadImages() {
+      try {
+        const transaction = db.transaction([STORE_NAME], 'readonly');
+        const store = transaction.objectStore(STORE_NAME);
+        const request = store.getAll();
+
+        await new Promise((resolve) => request.onsuccess = resolve);
+        const images = request.result;
+
+        const container = document.getElementById('imageContainer');
+        container.innerHTML = ''; // 清空原有内容
+
+        images.forEach((image) => {
+          // 将 ArrayBuffer 转换为 Blob
+          const blob = new Blob([image.data], { type: image.type });
+          const imgUrl = URL.createObjectURL(blob);
+
+          const img = document.createElement('img');
+          img.src = imgUrl;
+          img.classList.add("full-img")
+          container.appendChild(img);
+        });
+      } catch (error) {
+        console.error(error);
+        alert('读取失败');
+      }
+    }
+    //解决手机浏览器自带返回 没刷新问题
+    (function () {
+      var isPageHide = false;
+      window.addEventListener('pageshow', function () {
+        if (isPageHide) {
+          var curUrl = window.location.href,
+            curIndex = curUrl.substring(curUrl.indexOf('wap/') + 4);
+          if (curIndex == 'my.jsp') {
+            myVue.$data.activeBottom = 4;
+          } else {
+            myVue.$data.activeBottom = 0;
+          }
+        }
+      });
+      window.addEventListener('pagehide', function () {
+        isPageHide = true;
+      });
+    })();
+    function getReport() {
+      window.location.href = "https://my.chsi.com.cn/archive/bab/xj/show.action"
+    }
+
+
+    // 初始化数据库连接
+    openDB().then(() => {
+      // 页面加载时自动读取已保存的图片
+      loadImages();
+    }).catch(console.error);
+
+  </script>
+</body>
+
+</html>
