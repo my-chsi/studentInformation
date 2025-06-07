@@ -45,18 +45,41 @@
         @apply mb-3;
       }
       .scrollable-container {
-        @apply max-h-[90vh] overflow-y-auto;
+        @apply max-h-[84vh] overflow-y-auto;
       }
     }
   </style>
 
     <style>
+        body {
+            box-sizing: border-box;
+        }
+
         .previewImage {
             width: 5rem;
         }
 
+        .button-container {
+            position: fixed;
+            left: 1rem;
+            top: .3rem;
+            margin-bottom: .5rem;
+        }
+
+        .submit {
+            padding: 0 1rem;
+            width: 100%;
+            position: fixed;
+            left: 0;
+            bottom: .3rem;
+        }
+
+        .scrollable-container {
+            margin-top: 1rem;
+        }
+
         .uploader {
-            height: 8rem;
+            height: 10rem;
             display: flex;
             align-items: center;
             justify-content: space-around;
@@ -66,7 +89,7 @@
 
 <body class="bg-gray-50">
     <div id="app" class="form-container">
-        <div class="">
+        <div class="button-container">
             <van-button type="primary" size="small" @click="useTemplate">
                 使用模板
             </van-button>
@@ -77,15 +100,12 @@
         <!-- 表单卡片 -->
         <div class="bg-white rounded-lg shadow-md p-4 md:p-6 scrollable-container">
             <!-- 照片上传区域 -->
-            <div class="photo-upload">
-                <h3 class="section-title" style="text-align: center;">证件照片</h3>
-                <div class="uploader">
-                    <div>
-                        <van-uploader :after-read="afterRead" :max-count="1" accept="image/*" upload-text="点击载入图片" />
-                    </div>
-                    <div v-if="previewImage" class="mt-4">
-                        <img :src="previewImage" alt="证件照" class="previewImage" />
-                    </div>
+            <div class="photo-upload uploader">
+                <div>
+                    <van-uploader :after-read="afterRead" :max-count="1" accept="image/*" upload-text="点击载入图片" />
+                </div>
+                <div v-if="previewImage" class="mt-4">
+                    <img :src="previewImage" alt="证件照" class="previewImage" />
                 </div>
             </div>
 
@@ -95,13 +115,12 @@
                 <van-field v-for="(item ,index) in list" class="form-field" v-model="formData[item.model]"
                     :label="item.label" :placeholder="item.placeholder" required />
             </div>
-
-            <!-- 提交按钮 -->
-            <div class="mt-8 flex justify-center">
-                <van-button type="primary" size="large" @click="submitForm">
-                    保存并生成
-                </van-button>
-            </div>
+        </div>
+        <!-- 提交按钮 -->
+        <div class="mt-8 flex justify-center submit">
+            <van-button type="primary" size="large" @click="submitForm">
+                保存并生成
+            </van-button>
         </div>
     </div>
 
