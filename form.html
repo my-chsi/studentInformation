@@ -62,7 +62,7 @@
             height: 6rem;
             display: block;
             border-radius: .3rem;
-            border: 1px solid #c0e8db;
+            border: 1px solid #ddd;
         }
 
         .button-container {
@@ -90,6 +90,13 @@
             align-items: center;
             justify-content: space-around;
         }
+
+        .previewImage-text {
+            margin-top: .3rem;
+            text-align: center;
+            font-size: .8rem;
+            color: #999;
+        }
     </style>
 </head>
 
@@ -112,6 +119,7 @@
                 </div>
                 <div v-if="previewImage" class="mt-4">
                     <img :src="previewImage" alt="证件照" class="previewImage" />
+                    <div class="previewImage-text">预览图</div>
                 </div>
             </div>
 
@@ -278,7 +286,8 @@
                     // 模拟表单提交
                     console.log('提交表单数据:', this.formData);
                     localStorage.setItem("stuInfo", JSON.stringify(this.formData))
-                    window.location.href = "./page.html"
+                    window.history.replaceState(null, "", "./page.html")
+                    window.location.reload()
                 }
             }
         });
