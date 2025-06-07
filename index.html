@@ -2,285 +2,116 @@
 <html lang="zh-CN">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学籍信息生成</title>
-    <!-- 引入 Vant 样式 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.2/lib/index.css">
-    <!-- 引入 Vue 和 Vant JS -->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vant@2.2/lib/vant.min.js"></script>
-    <!-- 引入 Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学信网模拟器</title>
+  <script src="./js/ismobile.js"></script>
+  <!-- 引入 Vant 样式 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.2/lib/index.css">
+  <!-- 引入 Vue 和 Vant JS -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vant@2.2/lib/vant.min.js"></script>
+  <!-- 引入 Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- 配置 Tailwind -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#1989fa', // Vant 主色调
-                    },
-                },
-            }
-        }
-    </script>
+  <!-- 配置 Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1989fa', // Vant 主色调
+          },
+        },
+      }
+    }
+  </script>
 
-    <style type="text/tailwindcss">
+  <style type="text/tailwindcss">
 
-        @layer utilities {
+    @layer utilities {
       .form-container {
         @apply max-w-4xl mx-auto px-4 py-6;
-      }
-      .form-title {
-        @apply text-xl font-bold text-gray-800 mb-6 text-center;
-      }
-      .section-title {
-        @apply text-lg font-semibold text-gray-700 mt-6 mb-3;
-      }
-      .photo-upload {
-        @apply bg-white rounded-lg p-4 border border-gray-200;
       }
       .form-field {
         @apply mb-3;
       }
-      .scrollable-container {
-        @apply max-h-[84vh] overflow-y-auto;
-      }
     }
   </style>
 
-    <style>
-        body {
-            box-sizing: border-box;
-        }
+  <style>
+    .form-container {
+      height: 100vh;
+      background-color: #d9eaf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .previewImage {
-            width: 5rem;
-        }
+    .submit {
+      width: 15rem;
+    }
 
-        .button-container {
-            position: fixed;
-            left: 1rem;
-            top: .3rem;
-            margin-bottom: .5rem;
-        }
-
-        .submit {
-            padding: 0 1rem;
-            width: 100%;
-            position: fixed;
-            left: 0;
-            bottom: .3rem;
-        }
-
-        .scrollable-container {
-            margin-top: 1rem;
-        }
-
-        .uploader {
-            height: 10rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-        }
-    </style>
+    .background {
+      position: absolute;
+      top: 3rem;
+      left: 0;
+      height: 30vh;
+      width: 100vw;
+      background-image: url(./img/part.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
 </head>
 
 <body class="bg-gray-50">
-    <div id="app" class="form-container">
-        <div class="button-container">
-            <van-button type="primary" size="small" @click="useTemplate">
-                使用模板
-            </van-button>
-            <van-button type="primary" size="small" @click="showTip">
-                温馨提示
-            </van-button>
-        </div>
-        <!-- 表单卡片 -->
-        <div class="bg-white rounded-lg shadow-md p-4 md:p-6 scrollable-container">
-            <!-- 照片上传区域 -->
-            <div class="photo-upload uploader">
-                <div>
-                    <van-uploader :after-read="afterRead" :max-count="1" accept="image/*" upload-text="点击载入图片" />
-                </div>
-                <div v-if="previewImage" class="mt-4">
-                    <img :src="previewImage" alt="证件照" class="previewImage" />
-                </div>
-            </div>
-
-
-            <!-- 个人信息表单 -->
-            <div class="mt-6">
-                <van-field v-for="(item ,index) in list" class="form-field" v-model="formData[item.model]"
-                    :label="item.label" :placeholder="item.placeholder" required />
-            </div>
-        </div>
-        <!-- 提交按钮 -->
-        <div class="mt-8 flex justify-center submit">
-            <van-button type="primary" size="large" @click="submitForm">
-                保存并生成
-            </van-button>
-        </div>
+  <div class="background">
+  </div>
+  <div id="app" class="form-container">
+    <div>
+      <div><van-field class="form-field" type="password" v-model="password" placeholder="请输入登录口令" /></div>
+      <van-button type="primary" class="submit" size="normal" @click="submitForm">
+        进入
+      </van-button>
     </div>
+  </div>
 
-    <script>
-        function openDB() {
-            return new Promise((resolve, reject) => {
-                const request = indexedDB.open(DB_NAME, 1);
-
-                request.onerror = () => reject('数据库打开失败');
-
-                request.onupgradeneeded = (event) => {
-                    const db = event.target.result;
-                    if (!db.objectStoreNames.contains(STORE_NAME)) {
-                        db.createObjectStore(STORE_NAME, { keyPath: 'id' });
-                    }
-                };
-
-                request.onsuccess = (event) => {
-                    db = event.target.result;
-                    resolve(db);
-                };
-            });
+  <script>
+    pws = "admin"
+    // 注册 Vant 组件
+    Vue.use(vant.Field);
+    Vue.use(vant.Button);
+    Vue.use(vant.Toast);
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          password: ''
+        };
+      },
+      created() {
+        this.password = localStorage.getItem("password") || '';
+        if (this.password == pws) {
+          this.login()
         }
-        // 注册 Vant 组件
-        Vue.use(vant.Uploader);
-        Vue.use(vant.Field);
-        Vue.use(vant.Picker);
-        Vue.use(vant.Button);
-        Vue.use(vant.Toast);
-        list = [
-            { model: "name", label: "姓名", placeholder: "请输入姓名" },
-            { model: "gender", label: "性别", placeholder: "请输入性别" },
-            { model: "birthday", label: "生日", placeholder: "格式：2003年01月01日" },
-            { model: "school", label: "学校", placeholder: "例：北京大学" },
-            { model: "degree", label: "学历", placeholder: "例：本科" },
-            { model: "major", label: "专业", placeholder: "例：软件工程" },
-            { model: "nationality", label: "民族", placeholder: "例：汉族" },
-            { model: "idNumber", label: "身份证号", placeholder: "请输入身份证号" },
-            { model: "schoolSystem", label: "学制", placeholder: "例：4（不要带年字）" },
-            { model: "college", label: "学院", placeholder: "例：计算机科学与技术学院" },
-            { model: "class", label: "班级", placeholder: "例：软件2205" },
-            { model: "studentId", label: "学号", placeholder: "例：20227733129" },
-            { model: "enrollmentDate", label: "入学日期", placeholder: "格式：2024年08月29日" },
-            { model: "graduationDate", label: "预计毕业日期", placeholder: "格式：2028年07月01日" },
-        ]
-        const DB_NAME = 'ImageDB';
-        const STORE_NAME = 'images';
-        let db;
-        new Vue({
-            el: '#app',
-            data() {
-                return {
-                    fileList: [],
-                    previewImage: '',
-                    formData: {
-                        name: '',
-                        gender: '',
-                        birthday: '',//出生年月日
-                        school: '',// 学校
-                        degree: '', // 学历
-                        major: '', // 专业
-                        nationality: '', // 民族
-                        idNumber: '',//身份证号
-                        schoolSystem: '',//学制
-                        college: '',//
-                        class: '',//班级
-                        studentId: '',//学号
-                        enrollmentDate: '',//入学日期
-                        graduationDate: ''//预计毕业日期
-                    }
-                };
-            },
-            created() {
-                let stuInfo = localStorage.getItem("stuInfo")
-                if (stuInfo) {
-                    this.formData = JSON.parse(stuInfo)
-                }
-                openDB()
-                this.loadImages()
-            },
-            methods: {
-                // 打开/创建数据库
-                loadImages() {
-                    let content = localStorage.getItem("base64Picture")
-                    if (content) {
-                        this.previewImage = content;
-                    }
-                },
-                showTip() {
-                    vant.Dialog({
-                        title: "温馨提示",
-                        message: `1. 本程序可以动态生成学籍信息（1:1复刻学信网）
-2. 以下所有信息只会存储到本地，确保您的隐私安全，请放心使用
-3. 所有信息都可以不是您本人的真实信息，但要确保信息的合理性`
-                    });
-                },
-                useTemplate() {
-                    this.formData = {
-                        name: '张三',
-                        gender: '男',
-                        birthday: '2006年06月06日',//出生年月日
-                        school: '清华大学',// 学校
-                        degree: '本科', // 学历
-                        major: '软件工程', // 专业
-                        nationality: '汉族', // 民族
-                        idNumber: '410223200606061420',//身份证号
-                        schoolSystem: '4',//学制
-                        college: '计算机科学与技术学院',//
-                        class: '软件2201',//班级
-                        studentId: '31220203129',//学号
-                        enrollmentDate: '2024年08月29日',//入学日期
-                        graduationDate: '2028年07月01日'//预计毕业日期
-                    }
-                },
-                async afterRead(readFile) {
-                    console.log('Selected file:', readFile);
-                    if (!readFile) return vant.Toast('请选择图片文件');
-                    const { file, content } = readFile;
-                    localStorage.setItem("base64Picture", content)
-
-                    try {
-                        // 读取文件为 ArrayBuffer
-                        const reader = new FileReader();
-                        reader.readAsArrayBuffer(file);
-                        await new Promise((resolve) => reader.onload = resolve);
-                        const arrayBuffer = reader.result;
-
-                        // 写入数据库
-                        const transaction = db.transaction([STORE_NAME], 'readwrite');
-                        const store = transaction.objectStore(STORE_NAME);
-                        const imageData = {
-                            id: "picture",
-                            data: arrayBuffer,
-                            type: file.type // 保存文件类型
-                        };
-
-                        await new Promise((resolve, reject) => {
-                            const request = store.put(imageData);
-                            request.onsuccess = () => resolve('保存成功');
-                            request.onerror = () => reject('保存失败');
-                        });
-
-                        vant.Toast('图片已保存');
-
-                        this.loadImages(); // 保存后重新加载图片
-                    } catch (error) {
-                        console.error(error);
-                        vant.Toast('保存失败');
-                    }
-                },
-
-                submitForm() {
-                    // 模拟表单提交
-                    console.log('提交表单数据:', this.formData);
-                    localStorage.setItem("stuInfo", JSON.stringify(this.formData))
-                    window.location.href = "./page.html"
-                }
-            }
-        });
-    </script>
+      },
+      methods: {
+        submitForm() {
+          if (this.password == pws) {
+            localStorage.setItem("password", this.password)
+            this.login()
+          } else {
+            localStorage.removeItem("password")
+            vant.Toast('口令错误');
+          }
+        },
+        login() {
+          window.location.href = "./form.html"
+        }
+      }
+    });
+  </script>
 </body>
 
 </html>

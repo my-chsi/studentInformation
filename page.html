@@ -8,6 +8,7 @@
     content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no,viewport-fit=cover">
   <meta name="format-detection" content="telephone=no" />
   <title>学信档案</title>
+  <script src="./js/ismobile.js"></script>
   <link rel="icon" href='https://t1.chei.com.cn/archive/favicon.ico' type="image/x-icon">
   <link rel="stylesheet" href='https://t1.chei.com.cn/archive/fonts/chsi-font.css' />
   <link rel="stylesheet" href="./css/extra-wrap.css">
@@ -178,9 +179,17 @@
             this.txewm.tcFlag = true;
             this.txewm.type = 2;
             this.txewm.archiveId = this.resultJson.result.id;
-          }
+          },
+          islogin() {
+            if (!localStorage.getItem("password")) {
+              window.location.href = "./index.html"
+            } else {
+              vant.Toast('登录成功！');
+            }
+          },
         },
         created() {
+          this.islogin()
           let stuInfo = localStorage.getItem("stuInfo")
           if (stuInfo) {
             this.formData = JSON.parse(stuInfo)
