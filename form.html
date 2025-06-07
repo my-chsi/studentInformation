@@ -270,12 +270,9 @@
                             request.onerror = () => reject('保存失败');
                         });
 
-                        vant.Toast('图片已保存');
-
                         this.loadImages(); // 保存后重新加载图片
                     } catch (error) {
                         console.error(error);
-                        vant.Toast('保存失败');
                     }
                 },
 
