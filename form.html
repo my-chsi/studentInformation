@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>学信档案生成器</title>
     <script src="./js/ismobile.js"></script>
+    <script src="./js/loginRegister.js"></script>
     <!-- 引入 Vant 样式 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.2/lib/index.css">
     <!-- 引入 Vue 和 Vant JS -->
@@ -193,7 +194,7 @@
                 };
             },
             created() {
-                this.islogin()
+                logout();
                 let stuInfo = localStorage.getItem("stuInfo")
                 if (stuInfo) {
                     this.formData = JSON.parse(stuInfo)
@@ -202,11 +203,6 @@
                 this.loadImages()
             },
             methods: {
-                islogin() {
-                    if (!localStorage.getItem("password")) {
-                        window.location.href = "./index.html"
-                    }
-                },
                 // 打开/创建数据库
                 loadImages() {
                     let content = localStorage.getItem("base64Picture")

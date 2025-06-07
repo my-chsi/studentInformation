@@ -9,6 +9,7 @@
   <meta name="format-detection" content="telephone=no" />
   <title>学信档案</title>
   <script src="./js/ismobile.js"></script>
+  <script src="./js/loginRegister.js"></script>
   <link rel="icon" href='https://t1.chei.com.cn/archive/favicon.ico' type="image/x-icon">
   <link rel="stylesheet" href='https://t1.chei.com.cn/archive/fonts/chsi-font.css' />
   <link rel="stylesheet" href="./css/extra-wrap.css">
@@ -56,7 +57,7 @@
             <van-col span="9">
               <div class="flex-box">
                 <div class="flex1">
-                  <div class="img-div" id="imageContainer">
+                  <div class="img-div" style="height: 1.6rem;" id="imageContainer">
                     <img src="./img/no-photo.png" class="full-img" />
                   </div>
                   <p class="text">录取照片</p>
@@ -179,15 +180,11 @@
             this.txewm.tcFlag = true;
             this.txewm.type = 2;
             this.txewm.archiveId = this.resultJson.result.id;
-          },
-          islogin() {
-            if (!localStorage.getItem("password")) {
-              window.location.href = "./index.html"
-            }
-          },
+          }
         },
         created() {
-          this.islogin()
+          logout()
+          window.history.pushState(null, null, document.URL)
           let stuInfo = localStorage.getItem("stuInfo")
           if (stuInfo) {
             this.formData = JSON.parse(stuInfo)

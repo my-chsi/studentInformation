@@ -13,6 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vant@2.2/lib/vant.min.js"></script>
   <!-- 引入 Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./js/loginRegister.js"></script>
 
   <!-- 配置 Tailwind -->
   <script>
@@ -78,7 +79,6 @@
   </div>
 
   <script>
-    pws = "admin"
     // 注册 Vant 组件
     Vue.use(vant.Field);
     Vue.use(vant.Button);
@@ -91,24 +91,18 @@
         };
       },
       created() {
-        this.password = localStorage.getItem("password") || '';
-        if (this.password == pws) {
-          this.login()
-        }
+        login()
       },
       methods: {
         submitForm() {
           if (this.password == pws) {
             localStorage.setItem("password", this.password)
-            this.login()
+            window.location.href = "./form.html"
           } else {
             localStorage.removeItem("password")
             vant.Toast('口令错误');
           }
         },
-        login() {
-          window.location.href = "./form.html"
-        }
       }
     });
   </script>
