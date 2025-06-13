@@ -23,6 +23,38 @@
   <script src='https://t2.chei.com.cn/archive/mobile/js/app-1.0.3.js'></script>
   <script src='https://t3.chei.com.cn/archive/mobile/js/lodash.min.js'></script>
   <script src='https://t4.chei.com.cn/archive/mobile/js/jweixin-1.6.0.js'></script>
+  <style>
+    .none-selete {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none
+    }
+
+    .custom-font0 {
+      font-family: "新细明体";
+      font-style: normal;
+      font-weight: 400;
+    }
+
+    .custom-font1 {
+      /* font-family: "微软正黑体"; */
+      /* font-family: "细明体"; */
+      font-family: "细明体";
+      font-weight: 375;
+    }
+
+    .left {
+      font-weight: 400;
+    }
+
+    .custom-font2 {
+      font-family: "粗明体";
+      font-weight: 450;
+    }
+
+    .custom-font3 {}
+  </style>
 </head>
 
 <body>
@@ -38,7 +70,7 @@
     </div>
 
     <template>
-      <div class="padding16 xj-index custom-font">
+      <div class="padding16 xj-index custom-font0 none-selete">
         <!-- 图像采集码 -->
         <div class="jd-res-div" :style="{marginBottom:'0.533rem'}">
           <div class="flex-box">
@@ -71,7 +103,7 @@
             </van-col>
             </van-col>
             <van-col span="15">
-              <h5 class="nameFamily">{{formData.name}}</h5>
+              <h5 class="nameFamily custom-font2">{{formData.name}}</h5>
               <p>{{formData.gender}}　{{formData.birthday}}</p>
             </van-col>
           </van-row>
@@ -83,7 +115,7 @@
             <div class="des">{{formData.major}}　|　普通全日制</div>
           </div>
         </div>
-        <div class="xj-c">
+        <div class="xj-c custom-font1">
           <ul class="gdjy-view-ul">
             <li>
               <div class="left">民族</div>
