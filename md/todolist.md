@@ -28,3 +28,7 @@
 ![alt text](image.png)
 2. 可以查看系统已安装的字体，在这里
 ![alt text](image-1.png)
+
+
+加载慢问题
+考虑加个缓存

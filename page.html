@@ -37,7 +37,6 @@
       font-weight: 400;
       font-display: block;
       src: url(./fonts/chis.OTF);
-      /* src: url(./fonts/STHUPO.TTF); */
     }
 
     .custom-font0 {
@@ -102,7 +101,7 @@
             </van-col>
             </van-col>
             <van-col span="15">
-              <h5 class="nameFamily custom-font2">{{formData.name}}</h5>
+              <h5>{{formData.name}}</h5>
               <p>{{formData.gender}}　{{formData.birthday}}</p>
             </van-col>
           </van-row>
@@ -165,7 +164,7 @@
         </div>
         <van-row>
           <van-col span="24">
-            <van-button onclick="getReport()" class="my-btn" type="primary">申请验证报告</van-button>
+            <van-button onclick="getReport()" class="custom-font0 my-btn" type="primary">申请验证报告</van-button>
           </van-col>
         </van-row>
       </div>

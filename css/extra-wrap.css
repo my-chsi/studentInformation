@@ -78,11 +78,6 @@
     border-radius: 0;
 }
 
-/* 重写字体 */
-.nameFamily {
-    font-family: Chsi, "rare-words-font";
-}
-
 .sur-input {
     /* width: 100%;            */
     margin-left: .267rem;
