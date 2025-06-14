@@ -4682,6 +4682,7 @@ a,a:link,a:visited {
 }
 
 .chsi-font {
+    font-family: Chsi;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -4767,7 +4768,7 @@ a,a:link,a:visited {
     width: 2.827rem;
     height: .533rem;
     margin-top: .32rem;
-    background: url(../images/logo.png) no-repeat;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/logo.png) no-repeat;
     background-size: 100% 100%
 }
 
@@ -4960,7 +4961,7 @@ a,a:link,a:visited {
 
 .vote-part .vote_bg_jygz {
     color: #6864eb;
-    background: #dcdcfc url(../images/jygz_bg.png) no-repeat;
+    background: #dcdcfc url(https://t4.chei.com.cn/archive/mobile/images/jygz_bg.png) no-repeat;
     background-size: 100%
 }
 
@@ -4970,7 +4971,7 @@ a,a:link,a:visited {
 
 .vote-part .vote_bg_zxs {
     color: #0080e8;
-    background: #daeeff url(../images/zxs_bg.png) no-repeat;
+    background: #daeeff url(https://t4.chei.com.cn/archive/mobile/images/zxs_bg.png) no-repeat;
     background-size: 100%
 }
 
@@ -4980,7 +4981,7 @@ a,a:link,a:visited {
 
 .vote-part .vote_bg_jyjz {
     color: #456cee;
-    background: #daeeff url(../images/jyjz_bg.png) no-repeat;
+    background: #daeeff url(https://t4.chei.com.cn/archive/mobile/images/jyjz_bg.png) no-repeat;
     background-size: 100%
 }
 
@@ -4990,7 +4991,7 @@ a,a:link,a:visited {
 
 .vote-part .vote_bg_cyfw {
     color: #3988ec;
-    background: #dfedfe url(../images/cyfw_bg.png) no-repeat;
+    background: #dfedfe url(https://t4.chei.com.cn/archive/mobile/images/cyfw_bg.png) no-repeat;
     background-size: 100%
 }
 
@@ -5000,7 +5001,7 @@ a,a:link,a:visited {
 
 .vote-part .vote_bg_jyqw {
     color: #1d91d8;
-    background: #dbf0fd url(../images/jyqw_bg.png) no-repeat;
+    background: #dbf0fd url(https://t4.chei.com.cn/archive/mobile/images/jyqw_bg.png) no-repeat;
     background-size: 100%
 }
 
@@ -5010,7 +5011,7 @@ a,a:link,a:visited {
 
 .vote-part .vote_bg_xzcp {
     color: #456cee;
-    background: #e7ecff url(../images/xzcp_bg.png) no-repeat;
+    background: #e7ecff url(https://t4.chei.com.cn/archive/mobile/images/xzcp_bg.png) no-repeat;
     background-size: 100%
 }
 
@@ -5019,36 +5020,36 @@ a,a:link,a:visited {
 }
 
 .vote-part .vote_bg_kzxz {
-    background: url(../images/kzxz_bg.png) no-repeat;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/kzxz_bg.png) no-repeat;
     background-size: 100%;
     padding: 0;
     height: 2.133rem
 }
 
 .vote-part .vote_bg_zcsx {
-    background: url(../images/zcsx_bg.png) no-repeat;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/zcsx_bg.png) no-repeat;
     background-size: 100%;
     padding: 0;
     height: 2.133rem
 }
 
 .vote-part .vote_bg_zytj {
-    background: url(../img/adv.png) no-repeat;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/zytj_bg.png) no-repeat;
     background-size: 100%
 }
 
 .vote-part .vote_bg_zymyd {
-    background: url(../images/zymyd_bg.png) no-repeat;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/zymyd_bg.png) no-repeat;
     background-size: 100%
 }
 
 .vote-part .vote_bg_yxmyd {
-    background: url(../images/yxmyd_bg.png) no-repeat;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/yxmyd_bg.png) no-repeat;
     background-size: 100%
 }
 
 .vote-part .vote_bg_shgldc {
-    background: url(../images/shgldc_bg.jpg) no-repeat;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/shgldc_bg.jpg) no-repeat;
     background-size: 100%
 }
 
@@ -5096,7 +5097,7 @@ a,a:link,a:visited {
 }
 
 .menu-part .zxyz-img {
-    background-image: url(../images/index-icon2.png)
+    background-image: url(https://t4.chei.com.cn/archive/mobile/images/index-icon2.png)
 }
 
 .menu-part .rzbg-img {
@@ -5981,7 +5982,7 @@ a,a:link,a:visited {
     width: 3.6rem;
     height: 3.6rem;
     margin: .267rem auto;
-    background: url(../images/zppj_success.png) no-repeat 50%;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/zppj_success.png) no-repeat 50%;
     background-size: 100% 100%
 }
 
@@ -6417,7 +6418,7 @@ a,a:link,a:visited {
     float: left;
     width: .853rem;
     height: .4rem;
-    background: url(../images/go-head.png) no-repeat 50%;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/go-head.png) no-repeat 50%;
     background-size: 100%;
     margin-top: .4rem
 }
@@ -7069,7 +7070,7 @@ a,a:link,a:visited {
     margin: .453rem .533rem;
     width: 3.627rem;
     height: .693rem;
-    background: url(../images/logo-white.png) no-repeat;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/logo-white.png) no-repeat;
     background-size: 100% 100%
 }
 
@@ -7127,13 +7128,13 @@ a,a:link,a:visited {
     margin: 1.493rem auto .827rem;
     width: 7.253rem;
     height: .613rem;
-    background: url(../images/part1-text.png) no-repeat;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/part1-text.png) no-repeat;
     background-size: 100% 100%
 }
 
 .my-index .part1 .img {
     height: 6.8rem;
-    background: url(../images/part1.png) no-repeat;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/part1.png) no-repeat;
     background-size: 100% 100%
 }
 
@@ -7153,49 +7154,49 @@ a,a:link,a:visited {
     margin: .8rem auto .96rem;
     width: 6.667rem;
     height: 5.707rem;
-    background: url(../images/t11.png) no-repeat
+    background: url(https://t4.chei.com.cn/archive/mobile/images/t11.png) no-repeat
 }
 
 .my-index .part3-img {
     margin: .96rem auto 1.6rem;
     width: 4rem;
     height: 4.907rem;
-    background: url(../images/t22.png) no-repeat
+    background: url(https://t4.chei.com.cn/archive/mobile/images/t22.png) no-repeat
 }
 
 .my-index .part4-img {
     margin: 1.067rem auto;
     width: 5.6rem;
     height: 5.6rem;
-    background: url(../images/t33.png) no-repeat
+    background: url(https://t4.chei.com.cn/archive/mobile/images/t33.png) no-repeat
 }
 
 .my-index .part5-img {
     margin: 1.36rem auto 1.547rem;
     width: 5.333rem;
     height: 4.827rem;
-    background: url(../images/t44.png) no-repeat
+    background: url(https://t4.chei.com.cn/archive/mobile/images/t44.png) no-repeat
 }
 
 .my-index .part6-img {
     margin: 1.36rem auto;
     width: 8rem;
     height: 4.987rem;
-    background: url(../images/t55.png) no-repeat
+    background: url(https://t4.chei.com.cn/archive/mobile/images/t55.png) no-repeat
 }
 
 .my-index .part7-img {
     margin: 1.333rem auto;
     width: 5.333rem;
     height: 5.067rem;
-    background: url(../images/t66.png) no-repeat
+    background: url(https://t4.chei.com.cn/archive/mobile/images/t66.png) no-repeat
 }
 
 .my-index .part8-img {
     margin: 1.2rem auto 1.413rem;
     width: 6.133rem;
     height: 5.12rem;
-    background: url(../images/t77.png) no-repeat
+    background: url(https://t4.chei.com.cn/archive/mobile/images/t77.png) no-repeat
 }
 
 .my-index .part-img {
@@ -7301,7 +7302,7 @@ a,a:link,a:visited {
     margin: 0 auto;
     width: 2.773rem;
     height: 2.027rem;
-    background: url(../images/my-logo.png) no-repeat 50%;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/my-logo.png) no-repeat 50%;
     background-size: 100%
 }
 
@@ -7464,7 +7465,7 @@ a,a:link,a:visited {
     margin: 2.613rem auto .427rem;
     width: 2.133rem;
     height: 2.133rem;
-    background: url(../images/error.png) no-repeat 50%;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/error.png) no-repeat 50%;
     background-size: 100%
 }
 
@@ -7554,12 +7555,12 @@ a,a:link,a:visited {
     text-align: center;
     padding-top: 2.613rem;
     color: #999;
-    background: url(../images/shouchi1.png) no-repeat;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/shouchi1.png) no-repeat;
     background-size: 100%
 }
 
 .verify .smrz .pic-item .backImg {
-    background-image: url(../images/shouchi2.png)
+    background-image: url(https://t4.chei.com.cn/archive/mobile/images/shouchi2.png)
 }
 
 .verify .smrz .rz-btn {
@@ -7613,7 +7614,7 @@ a,a:link,a:visited {
     width: 5.733rem;
     padding: 3.573rem .533rem .64rem;
     background: #fff;
-    background: url(../images/nopass.png) no-repeat center 1.28rem;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/nopass.png) no-repeat center 1.28rem;
     background-size: 2.667rem;
     text-align: center
 }
@@ -7837,7 +7838,7 @@ a,a:link,a:visited {
     font-size: .427rem;
     border: 1px solid #e8e8e8;
     padding-top: 3.467rem;
-    background: #fff url(../images/no-sqgl.png) no-repeat center .747rem;
+    background: #fff url(https://t4.chei.com.cn/archive/mobile/images/no-sqgl.png) no-repeat center .747rem;
     background-size: 25%
 }
 
@@ -8047,7 +8048,7 @@ a,a:link,a:visited {
     right: 0;
     width: .987rem;
     height: .987rem;
-    background: url(../images/dctp2x.png) no-repeat 0 0;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/dctp2x.png) no-repeat 0 0;
     background-size: 200%
 }
 
@@ -8178,7 +8179,7 @@ a,a:link,a:visited {
 
 .vote-page .vote-top-bg {
     height: 2.667rem;
-    background: url(../images/vote_top_bg.png) no-repeat 50%;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/vote_top_bg.png) no-repeat 50%;
     background-size: 100%
 }
 
@@ -8305,7 +8306,7 @@ a,a:link,a:visited {
 
 .gk2024-page .vote-top-bg {
     height: 2.667rem;
-    background: url(../images/gk2024_vote_top_bg.jpg) no-repeat 50%;
+    background: url(https://t4.chei.com.cn/archive/mobile/images/gk2024_vote_top_bg.jpg) no-repeat 50%;
     background-size: 100%
 }
 
