@@ -53,6 +53,16 @@
 
     .custom-font3 {}
   </style>
+  <script>
+    window.onload = () => {
+      // 随机背景
+      bglist = ["kzxz", "zcsx", "zytj", "zymyd", "yxmyd"];
+      length = bglist.length;
+      randomIndex = Math.floor(Math.random() * length)
+      classList = document.getElementById("vote_bg").classList;
+      classList.add("vote_bg_" + bglist[randomIndex])
+    }
+  </script>
 </head>
 
 <body>
@@ -62,7 +72,7 @@
     <div class="vote-part">
       <!--移动端-->
       <div id="vote_wap">
-        <a onclick="return false" style="display:block" class="vote-jy-part vote_bg_zytj"></a>
+        <a onclick="return false" style="display:block" id="vote_bg" class="vote-jy-part"></a>
       </div>
 
     </div>
