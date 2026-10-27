@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>斗地主计分器</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Tailwind 配置 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#E63946', // 主色调：红色（代表活力和游戏感）
+                        secondary: '#457B9D',
+                        accent: '#F1FAEE',
+                        dark: '#1D3557',
+                        light: '#F1FAEE',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-shadow {
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.1);
+            }
+            .btn-bounce {
+                transition: transform 0.1s ease;
+            }
+            .btn-bounce:active {
+                transform: scale(0.95);
+            }
+            .score-change {
+                animation: scorePopup 0.5s ease-out forwards;
+            }
+            .player-transition {
+                transition: all 0.5s ease-in-out;
+            }
+            @keyframes scorePopup {
+                0% { transform: translateY(0); opacity: 1; }
+                100% { transform: translateY(-20px); opacity: 0; }
+            }
+            .trophy-1 { color: #FFD700; } /* 金牌 */
+            .trophy-2 { color: #C0C0C0; } /* 银牌 */
+            .trophy-3 { color: #CD7F32; } /* 铜牌 */
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-dark to-secondary min-h-screen text-light font-sans">
+    <div class="container mx-auto px-4 py-6 max-w-5xl">
+        <!-- 标题区域 -->
+        <header class="text-center mb-6 sm:mb-10">
+            <h1 class="text-[clamp(1.8rem,5vw,3rem)] font-bold text-primary mb-2 tracking-wider">
+                <i class="fa fa-gamepad mr-3" aria-hidden="true"></i>斗地主计分器
+            </h1>
+            <p class="text-accent/80 text-base sm:text-lg">轻松记录三位玩家的每局得分</p>
+        </header>
+
+        <!-- 玩家得分卡片容器 -->
+        <div id="players-container" class="space-y-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-6 mb-8">
+            <!-- 玩家卡片将通过JS动态生成 -->
+        </div>
+
+        <!-- 操作按钮区域 -->
+        <div class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8">
+            <button id="round-btn"
+                class="bg-secondary hover:bg-secondary/80 text-white font-semibold px-5 py-3 rounded-full flex items-center transition-all btn-bounce min-w-[130px] justify-center">
+                <i class="fa fa-refresh mr-2" aria-hidden="true"></i>
+                记录本局
+            </button>
+            <button id="reset-btn"
+                class="bg-primary hover:bg-primary/80 text-white font-semibold px-5 py-3 rounded-full flex items-center transition-all btn-bounce min-w-[130px] justify-center">
+                <i class="fa fa-trash mr-2" aria-hidden="true"></i>
+                重置所有
+            </button>
+            <button id="custom-score-btn"
+                class="bg-dark hover:bg-dark/80 text-white font-semibold px-5 py-3 rounded-full flex items-center transition-all btn-bounce min-w-[130px] justify-center border border-light/20">
+                <i class="fa fa-pencil mr-2" aria-hidden="true"></i>
+                自定义分数
+            </button>
+        </div>
+
+        <!-- 历史记录区域 -->
+        <div class="bg-dark/40 backdrop-blur-sm rounded-2xl p-4 sm:p-6 card-shadow border border-light/10 mb-6">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <i class="fa fa-history text-primary mr-2" aria-hidden="true"></i>
+                本局记录
+            </h2>
+            <div id="history-container" class="max-h-60 overflow-y-auto pr-2 space-y-3 text-sm">
+                <div class="text-center text-light/50 py-8">
+                    <i class="fa fa-inbox text-3xl mb-2" aria-hidden="true"></i>
+                    <p>暂无记录</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 自定义分数模态框 (默认隐藏) -->
+        <div id="custom-score-modal"
+            class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+            <div class="bg-dark rounded-2xl p-5 sm:p-6 w-full max-w-md transform transition-all card-shadow">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">自定义分数</h3>
+                    <button id="close-modal" class="text-light/60 hover:text-light transition-colors">
+                        <i class="fa fa-times text-xl" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <div class="space-y-4 mb-6">
+                    <div>
+                        <label class="block text-sm mb-1" id="custom-label-1">玩家一分数</label>
+                        <input type="number" id="custom-score-1"
+                            class="w-full bg-dark/60 border border-light/20 rounded-lg px-4 py-2 text-light focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-1" id="custom-label-2">玩家二分数</label>
+                        <input type="number" id="custom-score-2"
+                            class="w-full bg-dark/60 border border-light/20 rounded-lg px-4 py-2 text-light focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-1" id="custom-label-3">玩家三分数</label>
+                        <input type="number" id="custom-score-3"
+                            class="w-full bg-dark/60 border border-light/20 rounded-lg px-4 py-2 text-light focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                </div>
+
+                <button id="apply-custom-score"
+                    class="w-full bg-primary hover:bg-primary/80 text-white font-semibold py-3 rounded-lg transition-all btn-bounce">
+                    应用分数
+                </button>
+            </div>
+        </div>
+
+        <!-- 修改玩家姓名模态框 (默认隐藏) -->
+        <div id="rename-modal"
+            class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+            <div class="bg-dark rounded-2xl p-5 sm:p-6 w-full max-w-md transform transition-all card-shadow">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">修改玩家姓名</h3>
+                    <button id="close-rename-modal" class="text-light/60 hover:text-light transition-colors">
+                        <i class="fa fa-times text-xl" aria-hidden="true"></i>
+                    </button>
+                </div>
+
+                <div class="space-y-4 mb-6">
+                    <div>
+                        <label class="block text-sm mb-1">新姓名</label>
+                        <input type="text" id="new-player-name"
+                            class="w-full bg-dark/60 border border-light/20 rounded-lg px-4 py-2 text-light focus:outline-none focus:ring-2 focus:ring-primary"
+                            placeholder="请输入玩家姓名">
+                    </div>
+                </div>
+
+                <button id="apply-rename"
+                    class="w-full bg-primary hover:bg-primary/80 text-white font-semibold py-3 rounded-lg transition-all btn-bounce">
+                    确认修改
+                </button>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="text-center text-light/50 text-sm mt-8">
+            <p>斗地主得分记录 &copy; 2025</p>
+        </footer>
+    </div>
+
+    <script>
+        // 初始化玩家数据，优先从本地存储读取
+        let players = JSON.parse(localStorage.getItem('doudizhuPlayers')) || [
+            { id: 1, name: '玩家一', score: 0 },
+            { id: 2, name: '玩家二', score: 0 },
+            { id: 3, name: '玩家三', score: 0 }
+        ];
+        let baseChange = 1;
+
+        // 历史记录
+        let history = JSON.parse(localStorage.getItem('doudizhuHistory')) || [];
+        let roundNumber = history.length > 0 ? Math.max(...history.map(h => h.round)) + 1 : 1;
+        let currentRenamePlayerId = null;
+
+        // 页面加载时渲染玩家卡片
+        function renderPlayers() {
+            const container = document.getElementById('players-container');
+            container.innerHTML = '';
+
+            // 按分数降序排序玩家
+            const sortedPlayers = [...players].sort((a, b) => b.score - a.score);
+
+            // 渲染每个玩家卡片
+            sortedPlayers.forEach((player, index) => {
+                const rank = index + 1;
+                const playerCard = document.createElement('div');
+                playerCard.className = `bg-dark/60 backdrop-blur-sm rounded-2xl p-5 sm:p-6 card-shadow player-transition border border-light/10`;
+                playerCard.dataset.playerId = player.id;
+
+                // 根据排名设置不同样式
+                let rankStyle = '';
+                if (rank === 1) {
+                    rankStyle = 'bg-gradient-to-r from-yellow-500 to-yellow-400 text-dark';
+                } else if (rank === 2) {
+                    rankStyle = 'bg-gradient-to-r from-gray-300 to-gray-400 text-dark';
+                } else {
+                    rankStyle = 'bg-gradient-to-r from-amber-700 to-amber-600 text-light';
+                }
+
+                playerCard.innerHTML = `
+                    <div class="flex justify-between items-center mb-3 sm:mb-4">
+                        <h2 class="text-lg sm:text-xl font-bold flex items-center">
+                            <span class="w-7 h-7 sm:w-8 sm:h-8 ${rankStyle} rounded-full flex items-center justify-center mr-2 text-xs sm:text-sm font-bold">${rank}</span>
+                            <span class="player-name">${player.name}</span>
+                            <button onclick="showRenameModal(${player.id})" class="ml-2 text-light/60 hover:text-light text-xs transition-colors">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </button>
+                        </h2>
+                        <div class="text-xs sm:text-sm px-2 sm:px-3 py-1 bg-secondary/30 rounded-full">
+                            <i class="fa fa-trophy trophy-${rank} mr-1" aria-hidden="true"></i>
+                            <span>第${rank}名</span>
+                        </div>
+                    </div>
+                    <div class="flex justify-center items-center my-4 sm:my-6">
+                        <span class="player-score text-[clamp(2rem,8vw,3.5rem)] font-bold text-primary">${player.score}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <button onclick="updateScore(${player.id}, ${-2 * baseChange})" class="bg-primary/60 hover:bg-primary/80 text-white rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-lg sm:text-xl transition-all btn-bounce">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                            &nbsp;
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                        </button>
+                        <button onclick="updateScore(${player.id}, ${-baseChange})" class="bg-primary/80 hover:bg-primary text-white rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-lg sm:text-xl transition-all btn-bounce">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                        </button>
+                        <button onclick="updateScore(${player.id}, ${baseChange})" class="bg-green-600/80 hover:bg-green-600 text-white rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-lg sm:text-xl transition-all btn-bounce">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                        <button onclick="updateScore(${player.id}, ${2 * baseChange})" class="bg-green-600/60 hover:bg-green-600 text-white rounded-full w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-lg sm:text-xl transition-all btn-bounce">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            &nbsp;
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                `;
+
+                container.appendChild(playerCard);
+            });
+
+            // 更新自定义分数模态框的标签
+            updateCustomScoreLabels();
+
+            // 保存到本地存储
+            saveToLocalStorage();
+        }
+
+        // 更新分数
+        function updateScore(playerId, amount) {
+            const player = players.find(p => p.id === playerId);
+            if (player) {
+                player.score += amount;
+
+                // 更新UI
+                renderPlayers();
+
+                // 添加分数变化动画
+                const playerCard = document.querySelector(`[data-player-id="${playerId}"]`);
+                const scoreElement = playerCard.querySelector('.player-score');
+
+                // 分数变化动画
+                scoreElement.classList.add('scale-110', 'text-yellow-400');
+                setTimeout(() => {
+                    scoreElement.classList.remove('scale-110', 'text-yellow-400');
+                }, 300);
+
+                // 显示分数变化提示
+                showScoreChange(playerCard, amount);
+            }
+        }
+
+        // 显示分数变化提示
+        function showScoreChange(playerCard, amount) {
+            const changeElement = document.createElement('div');
+            changeElement.className = 'score-change absolute font-bold';
+            changeElement.style.color = amount > 0 ? 'green' : 'red';
+            changeElement.textContent = amount > 0 ? `+${amount}` : amount;
+
+            // 定位到玩家卡片上方
+            const rect = playerCard.getBoundingClientRect();
+            changeElement.style.top = `${rect.top + window.scrollY - 30}px`;
+            changeElement.style.left = `${rect.left + rect.width / 2}px`;
+            changeElement.style.transform = 'translateX(-50%)';
+            changeElement.style.position = 'absolute';
+
+            document.body.appendChild(changeElement);
+
+            // 动画结束后移除元素
+            setTimeout(() => {
+                changeElement.remove();
+            }, 500);
+        }
+
+        // 记录本局
+        document.getElementById('round-btn').addEventListener('click', () => {
+            // 创建当前分数的深拷贝
+            const currentScores = players.map(player => ({
+                id: player.id,
+                name: player.name,
+                score: player.score
+            }));
+
+            const timestamp = new Date().toLocaleTimeString();
+
+            // 添加到历史记录
+            history.push({
+                round: roundNumber,
+                timestamp,
+                scores: currentScores
+            });
+
+            // 更新历史记录UI
+            updateHistoryUI();
+
+            // 增加局数
+            roundNumber++;
+
+            // 保存到本地存储
+            saveToLocalStorage();
+
+            // 显示记录提示
+            showNotification('本局已记录');
+        });
+
+        // 更新历史记录UI
+        function updateHistoryUI() {
+            const container = document.getElementById('history-container');
+
+            // 清空容器（如果有记录）
+            if (history.length > 0) {
+                container.innerHTML = '';
+            } else {
+                container.innerHTML = `
+                    <div class="text-center text-light/50 py-8">
+                        <i class="fa fa-inbox text-3xl mb-2" aria-hidden="true"></i>
+                        <p>暂无记录</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // 倒序显示历史记录（最新的在上面）
+            history.slice().reverse().forEach(record => {
+                const recordElement = document.createElement('div');
+                recordElement.className = 'bg-dark/30 rounded-lg p-3 border border-light/10 hover:bg-dark/50 transition-colors';
+
+                // 按分数排序显示本局记录
+                const sortedScores = [...record.scores].sort((a, b) => b.score - a.score);
+
+                let scoresHtml = '';
+                sortedScores.forEach(score => {
+                    scoresHtml += `
+                        <div class="flex justify-between items-center">
+                            <span>${score.name}</span>
+                            <span class="${score.score >= 0 ? 'text-green-400' : 'text-red-400'}">${score.score}</span>
+                        </div>
+                    `;
+                });
+
+                recordElement.innerHTML = `
+                    <div class="flex justify-between items-center mb-2 pb-1 border-b border-light/10">
+                        <span class="font-bold text-primary">第 ${record.round} 局</span>
+                        <span class="text-xs text-light/60">${record.timestamp}</span>
+                    </div>
+                    <div class="space-y-1 mt-2">
+                        ${scoresHtml}
+                    </div>
+                `;
+
+                container.appendChild(recordElement);
+            });
+        }
+
+        // 重置所有分数和记录
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            if (confirm('确定要重置所有分数和记录吗？')) {
+                // 重置分数（保留玩家姓名）
+                players.forEach(player => {
+                    player.score = 0;
+                });
+
+                // 重置历史记录
+                history = [];
+                roundNumber = 1;
+
+                // 更新UI
+                renderPlayers();
+                updateHistoryUI();
+
+                // 保存到本地存储
+                saveToLocalStorage();
+
+                // 显示重置提示
+                showNotification('已重置所有分数和记录');
+            }
+        });
+
+        // 自定义分数模态框控制
+        const scoreModal = document.getElementById('custom-score-modal');
+        document.getElementById('custom-score-btn').addEventListener('click', () => {
+            // 填充当前分数
+            players.forEach(player => {
+                document.getElementById(`custom-score-${player.id}`).value = player.score;
+            });
+
+            // 显示模态框
+            scoreModal.classList.remove('hidden');
+            scoreModal.classList.add('flex');
+        });
+
+        document.getElementById('close-modal').addEventListener('click', () => {
+            scoreModal.classList.add('hidden');
+            scoreModal.classList.remove('flex');
+        });
+
+        // 更新自定义分数标签（显示当前玩家姓名）
+        function updateCustomScoreLabels() {
+            players.forEach(player => {
+                document.getElementById(`custom-label-${player.id}`).textContent = `${player.name}分数`;
+            });
+        }
+
+        // 应用自定义分数
+        document.getElementById('apply-custom-score').addEventListener('click', () => {
+            players.forEach(player => {
+                const scoreInput = document.getElementById(`custom-score-${player.id}`);
+                player.score = parseInt(scoreInput.value) || 0;
+            });
+
+            // 更新UI
+            renderPlayers();
+
+            // 关闭模态框
+            scoreModal.classList.add('hidden');
+            scoreModal.classList.remove('flex');
+
+            // 保存到本地存储
+            saveToLocalStorage();
+
+            // 显示提示
+            showNotification('已应用自定义分数');
+        });
+
+        // 显示重命名模态框
+        function showRenameModal(playerId) {
+            currentRenamePlayerId = playerId;
+            const player = players.find(p => p.id === playerId);
+            document.getElementById('new-player-name').value = player.name;
+            document.getElementById('new-player-name').focus();
+
+            // 显示模态框
+            document.getElementById('rename-modal').classList.remove('hidden');
+            document.getElementById('rename-modal').classList.add('flex');
+        }
+
+        // 关闭重命名模态框
+        document.getElementById('close-rename-modal').addEventListener('click', () => {
+            document.getElementById('rename-modal').classList.add('hidden');
+            document.getElementById('rename-modal').classList.remove('flex');
+            currentRenamePlayerId = null;
+        });
+
+        // 应用重命名
+        document.getElementById('apply-rename').addEventListener('click', () => {
+            if (currentRenamePlayerId) {
+                const newName = document.getElementById('new-player-name').value.trim();
+                if (newName) {
+                    const player = players.find(p => p.id === currentRenamePlayerId);
+                    if (player) {
+                        player.name = newName;
+
+                        // 更新UI
+                        renderPlayers();
+                        updateHistoryUI();
+
+                        // 保存到本地存储
+                        saveToLocalStorage();
+
+                        // 显示提示
+                        showNotification(`已将玩家姓名改为 ${newName}`);
+                    }
+                } else {
+                    showNotification('请输入有效的玩家姓名');
+                    return;
+                }
+            }
+
+            // 关闭模态框
+            document.getElementById('rename-modal').classList.add('hidden');
+            document.getElementById('rename-modal').classList.remove('flex');
+            currentRenamePlayerId = null;
+        });
+
+        // 显示通知
+        function showNotification(message) {
+            // 创建通知元素
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-4 right-4 bg-dark text-light px-4 py-2 rounded-lg shadow-lg z-50 transform translate-y-10 opacity-0 transition-all duration-300';
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            // 显示通知
+            setTimeout(() => {
+                notification.classList.remove('translate-y-10', 'opacity-0');
+            }, 10);
+
+            // 3秒后隐藏通知
+            setTimeout(() => {
+                notification.classList.add('translate-y-10', 'opacity-0');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // 点击模态框外部关闭
+        scoreModal.addEventListener('click', (e) => {
+            if (e.target === scoreModal) {
+                scoreModal.classList.add('hidden');
+                scoreModal.classList.remove('flex');
+            }
+        });
+
+        document.getElementById('rename-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('rename-modal')) {
+                document.getElementById('rename-modal').classList.add('hidden');
+                document.getElementById('rename-modal').classList.remove('flex');
+                currentRenamePlayerId = null;
+            }
+        });
+
+        // 保存数据到本地存储
+        function saveToLocalStorage() {
+            localStorage.setItem('doudizhuPlayers', JSON.stringify(players));
+            localStorage.setItem('doudizhuHistory', JSON.stringify(history));
+        }
+
+        // 初始化页面
+        renderPlayers();
+        updateHistoryUI();
+
+        // 支持按ESC键关闭模态框
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                scoreModal.classList.add('hidden');
+                scoreModal.classList.remove('flex');
+                document.getElementById('rename-modal').classList.add('hidden');
+                document.getElementById('rename-modal').classList.remove('flex');
+                currentRenamePlayerId = null;
+            }
+        });
+    </script>
+</body>
+
+</html>

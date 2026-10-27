@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录</title>
+  <script src="./js/ismobile.js"></script>
+  <!-- 引入 Vant 样式 -->
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.2/lib/index.css"> -->
+  <!-- 引入 Vue 和 Vant JS -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vant@2.2/lib/vant.min.js"></script> -->
+  <link rel="stylesheet" href="./css/vant.css">
+  <script src="./js/vue.min.js"></script>
+  <script src="./js/vant.min.js"></script>
+  <!-- 引入 Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./js/loginRegister.js"></script>
+
+  <!-- 配置 Tailwind -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#1989fa', // Vant 主色调
+          },
+        },
+      }
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+
+    @layer utilities {
+      .form-container {
+        @apply max-w-4xl mx-auto px-4 py-6;
+      }
+      .form-field {
+        @apply mb-3;
+      }
+    }
+  </style>
+
+  <style>
+    .form-container {
+      height: 100vh;
+      background-color: #d9eaf8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .submit {
+      width: 15rem;
+    }
+
+    .background {
+      position: absolute;
+      top: 3rem;
+      left: 0;
+      height: 30vh;
+      width: 100vw;
+      background-image: url("./img/part.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50">
+  <div class="background">
+  </div>
+  <div id="app" class="form-container">
+    <div>
+      <div><van-field class="form-field" type="password" v-model="password" placeholder="请输入登录口令" /></div>
+      <van-button type="primary" class="submit" size="normal" @click="submitForm">
+        进入
+      </van-button>
+    </div>
+  </div>
+
+  <script>
+    // 注册 Vant 组件
+    Vue.use(vant.Field);
+    Vue.use(vant.Button);
+    Vue.use(vant.Toast);
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          password: ''
+        };
+      },
+      created() {
+        login()
+      },
+      methods: {
+        submitForm() {
+          if (this.password == pws) {
+            localStorage.setItem("password", this.password)
+            window.location.href = "./form.html"
+          } else {
+            localStorage.removeItem("password")
+            vant.Toast('口令错误');
+          }
+        },
+      }
+    });
+  </script>
+</body>
+
+</html>
